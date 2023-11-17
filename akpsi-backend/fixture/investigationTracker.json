@@ -1,0 +1,68 @@
+[
+    {
+        "investigationTrackerId": "a4d02d13-dac6-4d7e-97de-9873ea820290",
+        "investigationTaskListId": "c98fcd38-2837-4a9a-9e63-e01870e679b3",
+        "taskId": "e3bc0f57-4807-455d-9024-92547a79e511",
+        "taskNo": "TASK-01",
+        "assignedTo": "4ebc3f28-8ede-42c8-b878-53a5110f3b07",
+        "supervisedBy": "1dd16052-67f0-4bf6-9d48-18eb77a447f4",
+        "status": "in-progress",
+        "complexity": "medium",
+        "estimationWorkingTime": 3,
+        "notes": "",
+        "attachment": ""
+    },
+    {
+        "investigationTrackerId": "a4d02d13-dac6-4d7e-97de-9873ea820290",
+        "investigationTaskListId": "c98fcd38-2837-4a9a-9e63-e01870e679b3",
+        "taskId": "e9cfd773-0177-4fad-ace2-102a53ce0832",
+        "taskNo": "TASK-02",
+        "assignedTo": "4ebc3f28-8ede-42c8-b878-53a5110f3b07",
+        "supervisedBy": "1dd16052-67f0-4bf6-9d48-18eb77a447f4",
+        "status": "to-do",
+        "complexity": "medium",
+        "estimationWorkingTime": 3,
+        "notes": "",
+        "attachment": ""
+    },
+    {
+        "investigationTrackerId": "a4d02d13-dac6-4d7e-97de-9873ea820290",
+        "investigationTaskListId": "c98fcd38-2837-4a9a-9e63-e01870e679b3",
+        "taskId": "e9cbee31-aede-4289-874e-1bb47cf31f4f",
+        "taskNo": "TASK-03",
+        "assignedTo": "09647e40-caea-4cc9-afe7-26093789649e",
+        "supervisedBy": "1dd16052-67f0-4bf6-9d48-18eb77a447f4",
+        "status": "in-progress",
+        "complexity": "high",
+        "estimationWorkingTime": 5,
+        "notes": "",
+        "attachment": ""
+    },
+    {
+        "investigationTrackerId": "a4d02d13-dac6-4d7e-97de-9873ea820290",
+        "investigationTaskListId": "0f070bfa-8986-436c-b4e4-33a061d92026",
+        "taskId": "4eb04dd9-e78f-4334-9861-d4bb425fd32d",
+        "taskNo": "TASK-04",
+        "assignedTo": "41a0cff3-636a-42dc-ac80-f45e1d3015d4",
+        "supervisedBy": "37fd5beb-0d55-4835-8ad7-28da00c6fb2d",
+        "status": "in-progress",
+        "complexity": "high",
+        "estimationWorkingTime": 5,
+        "notes": "",
+        "attachment": ""
+    },
+    {
+        "investigationTrackerId": "331b8d15-bf37-4b46-aedf-7421f8a5ec75",
+        "investigationTaskListId": "0f070bfa-8986-436c-b4e4-33a061d92026",
+        "taskId": "f78ecd1e-3373-4e5f-a108-8866281780bc",
+        "taskNo": "TASK-05",
+        "assignedTo": "c8a3c643-28da-493d-ad5e-0cebb760242d",
+        "supervisedBy": "37fd5beb-0d55-4835-8ad7-28da00c6fb2d",
+        "status": "done",
+        "complexity": "low",
+        "estimationWorkingTime": 2,
+        "notes": "",
+        "attachment": ""
+    }
+    
+]

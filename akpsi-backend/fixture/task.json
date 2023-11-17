@@ -1,0 +1,32 @@
+[
+    {
+        "taskId": "e3bc0f57-4807-455d-9024-92547a79e511",
+        "taskCategoryId": "6c8ed9a2-4910-4607-bdd0-d3728929819c",
+        "taskName": "Penyelidikan-A-1",
+        "taskDescription": "Deskripsi Penyelidikan A1"
+    },
+    {
+        "taskId": "e9cfd773-0177-4fad-ace2-102a53ce0832",
+        "taskCategoryId": "6c8ed9a2-4910-4607-bdd0-d3728929819c",
+        "taskName": "Penyelidikan-A-2",
+        "taskDescription": "Deskripsi Penyelidikan A2"
+    },
+    {
+        "taskId": "e9cbee31-aede-4289-874e-1bb47cf31f4f",
+        "taskCategoryId": "e069ae4f-4363-4812-b517-e0bc847d455c",
+        "taskName": "Penyelidikan-B-1",
+        "taskDescription": "Deskripsi Penyelidikan B1"
+    },
+    {
+        "taskId": "4eb04dd9-e78f-4334-9861-d4bb425fd32d",
+        "taskCategoryId": "e069ae4f-4363-4812-b517-e0bc847d455c",
+        "taskName": "Penyelidikan-B-2",
+        "taskDescription": "Deskripsi Penyelidikan B2"
+    },
+    {
+        "taskId": "f78ecd1e-3373-4e5f-a108-8866281780bc",
+        "taskCategoryId": "e069ae4f-4363-4812-b517-e0bc847d455c",
+        "taskName": "Penyelidikan-B-3",
+        "taskDescription": "Deskripsi Penyelidikan B3"
+    }
+]

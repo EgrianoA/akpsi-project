@@ -1,0 +1,90 @@
+[
+    {
+        "userId": "de01bac7-4973-42c7-b176-3a82b511c452",
+        "username": "admin",
+        "employeeNumber": "BPK-001",
+        "role": "admin",
+        "email": "admin@bpk.gov.id",
+        "phoneNumber": "62812345678900",
+        "fullName": "Admin",
+        "profilePicture": "",
+        "password": ""
+    },
+    {
+        "userId": "cf2dbc18-1ab3-4006-8f31-23eb781fcd47",
+        "username": "teamlead1",
+        "employeeNumber": "BPK-002",
+        "role": "teamlead",
+        "email": "teamlead1@bpk.gov.id",
+        "phoneNumber": "62812345678901",
+        "fullName": "Team Lead 1",
+        "profilePicture": "",
+        "password": ""
+    },
+    {
+        "userId": "37fd5beb-0d55-4835-8ad7-28da00c6fb2d",
+        "username": "teamlead2",
+        "employeeNumber": "BPK-003",
+        "role": "teamlead",
+        "email": "teamlead2@bpk.gov.id",
+        "phoneNumber": "62812345678902",
+        "fullName": "Team Lead 2",
+        "profilePicture": "",
+        "password": ""
+    },
+    {
+        "userId": "1dd16052-67f0-4bf6-9d48-18eb77a447f4",
+        "username": "subteamlead1",
+        "employeeNumber": "BPK-004",
+        "role": "subteamlead",
+        "email": "subteamlead@bpk.gov.id",
+        "phoneNumber": "62812345678903",
+        "fullName": "Sub Team Lead 1",
+        "profilePicture": "",
+        "password": ""
+    },
+    {
+        "userId": "4ebc3f28-8ede-42c8-b878-53a5110f3b07",
+        "username": "investigator1",
+        "employeeNumber": "BPK-005",
+        "role": "investigator",
+        "email": "investigator1@bpk.gov.id",
+        "phoneNumber": "62812345678904",
+        "fullName": "Investigator 1",
+        "profilePicture": "",
+        "password": ""
+    },
+    {
+        "userId": "09647e40-caea-4cc9-afe7-26093789649e",
+        "username": "investigator2",
+        "employeeNumber": "BPK-006",
+        "role": "investigator",
+        "email": "investigator2@bpk.gov.id",
+        "phoneNumber": "62812345678905",
+        "fullName": "Investigator 2",
+        "profilePicture": "",
+        "password": ""
+    },
+    {
+        "userId": "41a0cff3-636a-42dc-ac80-f45e1d3015d4",
+        "username": "investigator3",
+        "employeeNumber": "BPK-007",
+        "role": "investigator",
+        "email": "investigator3@bpk.gov.id",
+        "phoneNumber": "62812345678906",
+        "fullName": "Investigator 3",
+        "profilePicture": "",
+        "password": ""
+    },
+    {
+        "userId": "c8a3c643-28da-493d-ad5e-0cebb760242d",
+        "username": "investigator4",
+        "employeeNumber": "BPK-008",
+        "role": "investigator",
+        "email": "investigator4@bpk.gov.id",
+        "phoneNumber": "62812345678907",
+        "fullName": "Investigator 4",
+        "profilePicture": "",
+        "password": ""
+    }
+]

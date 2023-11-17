@@ -1,0 +1,21 @@
+[
+    {
+        "teamId": "6813839a-e4db-44bb-abfa-d3ba13bac032",
+        "teamName": "Team A",
+        "teamLead": "cf2dbc18-1ab3-4006-8f31-23eb781fcd47",
+        "teamList": [
+            "4ebc3f28-8ede-42c8-b878-53a5110f3b07",
+            "09647e40-caea-4cc9-afe7-26093789649e"
+        ]
+    },
+    {
+        "teamId": "f2e2e220-3a85-4447-a8ad-f418592ee519",
+        "teamName": "Team B",
+        "teamLead": "37fd5beb-0d55-4835-8ad7-28da00c6fb2d",
+        "subTeamLead": "1dd16052-67f0-4bf6-9d48-18eb77a447f4",
+        "teamList": [
+            "41a0cff3-636a-42dc-ac80-f45e1d3015d4",
+            "c8a3c643-28da-493d-ad5e-0cebb760242d"
+        ]
+    }
+]
