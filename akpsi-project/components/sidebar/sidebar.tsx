@@ -63,7 +63,7 @@ export const SidebarWrapper = () => {
                      />
                      <SidebarItem
                         isActive={router.pathname === '/task'}
-                        title="Daftar Tugas Investigasi"
+                        title="Daftar Tugas Pemeriksaan"
                         icon={<BookOutlined />}
                         href="task"
                      />
@@ -75,7 +75,7 @@ export const SidebarWrapper = () => {
                      />
                      <SidebarItem
                         isActive={router.pathname === '/board'}
-                        title="Tugas Investigasi"
+                        title="Monitor Pemeriksaan"
                         icon={<ContainerOutlined />}
                         href="board"
                      />
