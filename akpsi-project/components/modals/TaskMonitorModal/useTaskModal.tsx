@@ -73,7 +73,7 @@ const tabItems = [
     },
 ]
 
-const TaskModal = ({
+const TaskMonitorModal = ({
     onClose,
     visible,
 }: {
@@ -174,7 +174,7 @@ const TaskModal = ({
         </Modal>
     )
 }
-const useTaskModal = () => {
+const useTaskMonitorModal = () => {
     const [visible, setVisible] = useState(false);
 
     const actions = useMemo(() => {
@@ -188,8 +188,8 @@ const useTaskModal = () => {
 
     return {
         ...actions,
-        render: () => <TaskModal onClose={actions.close} visible={visible} />,
+        render: () => <TaskMonitorModal onClose={actions.close} visible={visible} />,
     };
 }
 
-export default useTaskModal
+export default useTaskMonitorModal

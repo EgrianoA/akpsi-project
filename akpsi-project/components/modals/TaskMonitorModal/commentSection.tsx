@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, List, Input, Form, Button, Row, Col } from 'antd';
 
-
-interface EditorProps {
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onSubmit: () => void;
-    submitting: boolean;
-    value: string;
-}
-
 const data = [
     {
         title: 'User 1 - 19/11/2023 17:49',

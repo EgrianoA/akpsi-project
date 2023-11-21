@@ -3,22 +3,15 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { Breadcrumbs, Crumb, CrumbLink } from '../components/breadcrumb/breadcrumb.styled';
 import { Flex } from '../components/styles/flex';
-import { Input, Table, Button, Tag, Row, Col, Card } from 'antd';
+import { Input, Table, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, FolderOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useTaskTemplateModal from '../components/modals/TaskTemplateModal/useTaskTemplateModal'
-import dayjs from 'dayjs'
 
 
 interface DataType {
     key: string;
-    taskNo: string;
-    taskTitle: string;
-    assignedTo: string;
-    supervisedBy: string;
-    complexity: string,
-    estimationWorkingTime: number;
-    status: string;
+    taskTemplateName: string;
 }
 
 const columns: ColumnsType<DataType> = [

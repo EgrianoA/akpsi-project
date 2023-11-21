@@ -3,9 +3,9 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { Breadcrumbs, Crumb, CrumbLink } from '../components/breadcrumb/breadcrumb.styled';
 import { Flex } from '../components/styles/flex';
-import { Input, Table, Tag, Row, Col, Card, Statistic, List, Button, Space } from 'antd';
+import { Input, Table, Button, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { SearchOutlined, ContainerOutlined, PlusCircleOutlined, FileExcelOutlined } from '@ant-design/icons'
+import { SearchOutlined, ContainerOutlined, PlusCircleOutlined, ReadOutlined } from '@ant-design/icons'
 import useTaskCategoryModal from '../components/modals/TaskCategoryModal/useTaskCategoryModal'
 import dayjs from 'dayjs'
 
@@ -51,7 +51,7 @@ const Task = () => {
         >
             <Breadcrumbs>
                 <Crumb>
-                    <ContainerOutlined />
+                    <ReadOutlined />
                     <CrumbLink>Kategori</CrumbLink>
                     <Text>/</Text>
                 </Crumb>

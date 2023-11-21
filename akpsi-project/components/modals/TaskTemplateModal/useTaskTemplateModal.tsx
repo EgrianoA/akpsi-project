@@ -5,15 +5,6 @@ import type { TransferItem, TransferProps } from 'antd/es/transfer';
 import difference from 'lodash/difference';
 
 
-
-interface RecordType {
-    key: string;
-    title: string;
-    description: string;
-    disabled: boolean;
-    tag: string;
-}
-
 interface DataType {
     key: string;
     title: string;
@@ -77,7 +68,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }: TableTransfe
     </Transfer>
 );
 
-const mockData = [
+const taskListData = [
     {
         key: 'A1',
         taskName: 'Task A',
@@ -186,7 +177,7 @@ const TaskTemplateModal = ({
                     <Col span={24}>
                         <Card title="Daftar Task">
                             <TableTransfer
-                                dataSource={mockData}
+                                dataSource={taskListData}
                                 targetKeys={targetKeys}
                                 showSearch={true}
                                 onChange={onChange}

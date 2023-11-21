@@ -3,8 +3,7 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { Breadcrumbs, Crumb, CrumbLink } from '../components/breadcrumb/breadcrumb.styled';
 import { Flex } from '../components/styles/flex';
-import { Input, Table, Button, Tag, Row, Col, Card, Descriptions } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { Input, Table, Button, Descriptions } from 'antd';
 import { SearchOutlined, TeamOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useTeamModal from '../components/modals/TeamModal/useTeamModal'
 import type { DescriptionsProps } from 'antd';

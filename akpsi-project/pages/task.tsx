@@ -3,10 +3,11 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { Breadcrumbs, Crumb, CrumbLink } from '../components/breadcrumb/breadcrumb.styled';
 import { Flex } from '../components/styles/flex';
-import { Input, Table, Tag, Row, Col, Card, Statistic, List, Button, Space } from 'antd';
+import { Input, Table, Card, Button, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { SearchOutlined, ContainerOutlined, PlusCircleOutlined, FileExcelOutlined } from '@ant-design/icons'
+import { SearchOutlined, ContainerOutlined, PlusCircleOutlined, FileExcelOutlined, BookOutlined } from '@ant-design/icons'
 import useTaskModal from '../components/modals/TaskModal/useTaskModal'
+import useUploadExcelModal from '../components/modals/TaskModal/useUploadExcelModal'
 import dayjs from 'dayjs'
 
 
@@ -48,6 +49,7 @@ const taskDescription = () => {
 
 const Task = () => {
     const taskModal = useTaskModal();
+    const uploadExcelModal = useUploadExcelModal();
     return (
         <Flex
             css={{
@@ -63,7 +65,7 @@ const Task = () => {
         >
             <Breadcrumbs>
                 <Crumb>
-                    <ContainerOutlined />
+                    <BookOutlined />
                     <CrumbLink>Tugas</CrumbLink>
                     <Text>/</Text>
                 </Crumb>
@@ -95,7 +97,7 @@ const Task = () => {
                         />
                     </Flex>
                     <Flex direction={'row'} css={{ gap: '$6' }} wrap={'wrap'}>
-                        <Button type="primary" icon={<FileExcelOutlined />}>
+                        <Button type="primary" icon={<FileExcelOutlined />} onClick={() => uploadExcelModal.open()}>
                             Import dengan excel
                         </Button>
                         <Button type="primary" icon={<PlusCircleOutlined />}>
@@ -117,6 +119,7 @@ const Task = () => {
                     })} />
             </Space>
             {taskModal.render()}
+            {uploadExcelModal.render()}
         </Flex>
     );
 };
