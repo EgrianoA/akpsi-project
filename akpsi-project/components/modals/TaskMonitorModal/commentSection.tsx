@@ -16,7 +16,7 @@ const data = [
     },
 ];
 
-const CommentSection = () => {
+const CommentSection = ({ taskNumber }: { taskNumber: string }) => {
     const [submitting, setSubmitting] = useState(false);
     const [value, setValue] = useState('');
 
@@ -50,7 +50,7 @@ const CommentSection = () => {
                     </Form.Item>
                     <Form.Item>
                         <Button htmlType="submit" loading={submitting} onClick={handleSubmit} type="primary">
-                            Add Comment
+                            Tambahkan komentar
                         </Button>
                     </Form.Item>
                 </Col>

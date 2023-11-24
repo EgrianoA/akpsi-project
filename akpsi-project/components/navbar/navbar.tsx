@@ -1,20 +1,18 @@
 import { Input, Link, Navbar, Text } from '@nextui-org/react';
 import React from 'react';
-import { FeedbackIcon } from '../icons/navbar/feedback-icon';
-import { GithubIcon } from '../icons/navbar/github-icon';
-import { SupportIcon } from '../icons/navbar/support-icon';
-import { SearchIcon } from '../icons/searchicon';
 import { Box } from '../styles/box';
 import { Flex } from '../styles/flex';
 import { BurguerButton } from './burguer-button';
 import { NotificationsDropdown } from './notifications-dropdown';
 import { UserDropdown } from './user-dropdown';
+import allUserData from '../../public/dummyData/userList.json'
 
 interface Props {
    children: React.ReactNode;
 }
 
 export const NavbarWrapper = ({ children }: Props) => {
+   const personalUserData = allUserData[0]
    const collapseItems = [
       'Profile',
       'Dashboard',
@@ -65,33 +63,11 @@ export const NavbarWrapper = ({ children }: Props) => {
             <Navbar.Content
                hideIn={'md'}
                css={{
-                  width: '25%',
+                  marginRight: 20,
+                  marginLeft: 'auto',
                }}
             >
-               <Input
-                  clearable
-                  contentLeft={
-                     <SearchIcon
-                        fill="var(--nextui-colors-accents6)"
-                        size={16}
-                     />
-                  }
-                  contentLeftStyling={false}
-                  css={{
-                     'w': '100%',
-                     'transition': 'all 0.2s ease',
-                     '@xsMax': {
-                        w: '100%',
-                        // mw: '300px',
-                     },
-                     '& .nextui-input-content--left': {
-                        h: '100%',
-                        ml: '$4',
-                        dflex: 'center',
-                     },
-                  }}
-                  placeholder="Search..."
-               />
+               {personalUserData.employeeNumber} - {personalUserData.fullName}
             </Navbar.Content>
             <Navbar.Content>
                <Navbar.Content>

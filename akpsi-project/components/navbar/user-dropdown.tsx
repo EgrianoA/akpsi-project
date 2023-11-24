@@ -1,8 +1,10 @@
 import {Avatar, Dropdown, Navbar, Text} from '@nextui-org/react';
 import React from 'react';
 import {DarkModeSwitch} from './darkmodeswitch';
+import allUserData from '../../public/dummyData/userList.json'
 
 export const UserDropdown = () => {
+   const personalUserData = allUserData[0]
    return (
       <Dropdown placement="bottom-right">
          <Navbar.Item>
@@ -10,9 +12,9 @@ export const UserDropdown = () => {
                <Avatar
                   bordered
                   as="button"
-                  color="secondary"
+                  color="success"
                   size="md"
-                  src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                  src={personalUserData.profilePicture}
                />
             </Dropdown.Trigger>
          </Navbar.Item>
@@ -20,28 +22,11 @@ export const UserDropdown = () => {
             aria-label="User menu actions"
             onAction={(actionKey) => console.log({actionKey})}
          >
-            <Dropdown.Item key="profile" css={{height: '$18'}}>
-               <Text b color="inherit" css={{d: 'flex'}}>
-                  Signed in as
-               </Text>
-               <Text b color="inherit" css={{d: 'flex'}}>
-                  zoey@example.com
-               </Text>
-            </Dropdown.Item>
             <Dropdown.Item key="settings" withDivider>
-               My Settings
-            </Dropdown.Item>
-            <Dropdown.Item key="team_settings">Team Settings</Dropdown.Item>
-            <Dropdown.Item key="analytics" withDivider>
-               Analytics
-            </Dropdown.Item>
-            <Dropdown.Item key="system">System</Dropdown.Item>
-            <Dropdown.Item key="configurations">Configurations</Dropdown.Item>
-            <Dropdown.Item key="help_and_feedback" withDivider>
-               Help & Feedback
+               Pengaturan Saya
             </Dropdown.Item>
             <Dropdown.Item key="logout" withDivider color="error">
-               Log Out
+               Keluar
             </Dropdown.Item>
             <Dropdown.Item key="switch" withDivider>
                <DarkModeSwitch />

@@ -6,7 +6,7 @@ import { SidebarItem } from './sidebar-item';
 import { SidebarMenu } from './sidebar-menu';
 import { useSidebarContext } from '../layout/layout-context';
 import { useRouter } from 'next/router';
-import { HomeOutlined, UserOutlined, FolderOutlined, BookOutlined, ContainerOutlined, TeamOutlined, ReadOutlined } from '@ant-design/icons'
+import { HomeOutlined, UserOutlined, FolderOutlined, BookOutlined, ContainerOutlined, TeamOutlined, ReadOutlined, FileDoneOutlined } from '@ant-design/icons'
 
 export const SidebarWrapper = () => {
    const router = useRouter();
@@ -78,6 +78,12 @@ export const SidebarWrapper = () => {
                         title="Monitor Pemeriksaan"
                         icon={<ContainerOutlined />}
                         href="board"
+                     />
+                     <SidebarItem
+                        isActive={router.pathname === '/evaluation'}
+                        title="Evaluasi Kinerja Pemeriksaan"
+                        icon={<FileDoneOutlined />}
+                        href="evaluation"
                      />
                   </SidebarMenu>
                </Sidebar.Body>

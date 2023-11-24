@@ -1,0 +1,102 @@
+[
+  {
+    "taskNumber": "PMR-TVRI-21",
+    "taskName": "Wawancara dan pengujian dokumen terkait proses perencanaan dan penganggaran program/kegiatan",
+    "taskDescription": "Lakukan wawancara dan pengujian dokumen terkait proses perencanaan dan penganggaran program/kegiatan di  LPP TVRI apakah telah melalui mekanisme dan  ketentuan yang berlaku",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Tinggi",
+    "estimation": 7,
+    "status": "Selesai"
+  },
+  {
+    "taskNumber": "PMR-TVRI-22",
+    "taskName": "Wawancara kepada Bagian Perencanaan pada masing-masing satker mengenai prosedur penganggaran",
+    "taskDescription": "Lakukan wawancara kepada Bagian Perencanaan pada masing-masing satker mengenai:\na. apakah prosedur/ tata cara dan dokumen penganggaran telah disusun secara benar, akurat dan memadai\nb. apakah penggunaan anggaran sumber dana PNBP telah memenuhi persyaratan penggunaan PNBP dan sesuai ketentuan terkait\n",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Menengah",
+    "estimation": 5,
+    "status": "Selesai"
+  },
+  {
+    "taskNumber": "PMR-TVRI-23",
+    "taskName": "Pengujian terhadap program/kegiatan dalam RKA KL",
+    "taskDescription": "Lakukan pengujian apakah setiap program/ kegiatan dalam RKA KL telah memiliki KAK (TOR), RAB, dan alokasi pelaksanaan kegiatan yang jelas (tercantum dalam lampiran III DIPA) dan lakukan pengujian kebenaran dan kepatuhan terhadap ketentuan",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Menengah",
+    "estimation": 5,
+    "status": "Selesai"
+  },
+  {
+    "taskNumber": "PMR-TVRI-24",
+    "taskName": "Pengujian dan reviu perencanaan dan pengajuan program/ kegiatan",
+    "taskDescription": "Lakukan pengujian dan reviu apakah perencanaan dan pengajuan program/ kegiatan telah sesuai dengan prosedur dan ketentuan serta dilakukan secara berjenjang",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Menengah",
+    "estimation": 5,
+    "status": "Selesai"
+  },
+  {
+    "taskNumber": "PMR-TVRI-25",
+    "taskName": "Pengujian dan reviu perencanaan dan pengajuan anggaran program/ kegiatan",
+    "taskDescription": "Lakukan pengujian dan reviu apakah perencanaan dan pengajuan anggaran program/ kegiatan telah sesuai dengan prosedur dan ketentuan serta dilakukan secara berjenjang",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Menengah",
+    "estimation": 5,
+    "status": "Selesai"
+  },
+  {
+    "taskNumber": "PMR-TVRI-26",
+    "taskName": "Pengujian dan reviu atas kegiatan atau pengadaan",
+    "taskDescription": "Lakukan pengujian dan reviu atas kegiatan/ barang/ jasa / kegiatan yang dibeli/ diperoleh/ dilaksanakan telah didukung dengan analisa kebutuhan/ usulan/ dokumen yang menunjukan spek/ jumlah/ jenis yang benar benar dibutuhkan diusulkan telah didukung dengan kondisi kebutuhan",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Menengah",
+    "estimation": 5,
+    "status": "Selesai"
+  },
+  {
+    "taskNumber": "PMR-TVRI-27",
+    "taskName": "Inventarisasi kegiatan yang repeat order mandatory",
+    "taskDescription": "Inventarisasi kegiatan yang repeat order mandatory, kegiatan yang tidak selesai ditahun-tahun sebelumnya dan dapatkan dokumen yang mendasarinya. Apabila tidak ada dokumen pendukung, lakukan wawancara alasannya",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Menengah",
+    "estimation": 5,
+    "status": "Selesai"
+  },
+  {
+    "taskNumber": "PMR-TVRI-28",
+    "taskName": "Penelusuran proses perencanaan",
+    "taskDescription": "Lakukan penelusuran proses perencanaan, apakah terdapat kegiatan yang tidak direncanakan sebelumnya maupun kegiatan yang diusulkan mendadak. Jika ada apakah kegiatan tersebut telah dilaksanakan sesuai mekanisme dan ketentuan yang berlaku",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Tinggi",
+    "estimation": 8,
+    "status": "Memerlukan Informasi Lebih Lanjut"
+  },
+  {
+    "taskNumber": "PMR-TVRI-29",
+    "taskName": "Pemeriksaan terhadap kinerja dan output yang jelas dan terukur sesuai kebutuhan",
+    "taskDescription": "Teliti apakah kegiatan mempunyai kinerja dan output yang jelas dan terukur sesuai kebutuhan",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Rendah",
+    "estimation": 3,
+    "status": "Dalam Pengerjaan"
+  },
+  {
+    "taskNumber": "PMR-TVRI-30",
+    "taskName": "Dapatkan dokumen atau keterangan dari KPA/ PPK",
+    "taskDescription": "Dapatkan dokumen atau keterangan dari KPA/ PPK mengenai alasan pemaketan dan pemilihan metode pengadaan",
+    "assignedTo": "BPK-021",
+    "assignedBy": "BPK-007",
+    "priority": "Rendah",
+    "estimation": 2,
+    "status": "Akan Dikerjakan"
+  }
+]

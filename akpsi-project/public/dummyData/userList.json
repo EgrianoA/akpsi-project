@@ -1,0 +1,22 @@
+[
+  {
+    "username": "heru.budianto",
+    "employeeNumber": "BPK-021",
+    "role": "Penyidik",
+    "email": "heru.budianto@bpk.gov.id",
+    "phoneNumber": "62812345678900",
+    "fullName": "Heru Budianto",
+    "profilePicture": "https://xsgames.co/randomusers/assets/avatars/male/64.jpg",
+    "password": ""
+  },
+  {
+    "username": "agustina.widyasari",
+    "employeeNumber": "BPK-007",
+    "role": "Ketua Tim",
+    "email": "agustina.widyasari@bpk.gov.id",
+    "phoneNumber": "62812345677121",
+    "fullName": "Agustina Widyasari",
+    "profilePicture": "https://xsgames.co/randomusers/assets/avatars/female/23.jpg",
+    "password": ""
+  }
+]

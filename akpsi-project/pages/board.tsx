@@ -167,7 +167,9 @@ const Board = () => {
                 </Crumb>
             </Breadcrumbs>
             <Space direction="vertical" style={{ display: 'flex' }} size="middle">
-                <Text h3>Monitor Tugas Pemeriksaan</Text>
+                <Row>
+                    <Text h3>Monitor Tugas Pemeriksaan</Text>
+                </Row>
                 <Row gutter={16}>
                     <Col span={12}>
                         <Card bordered={false} title='Status Pemeriksaan' >
@@ -216,7 +218,7 @@ const Board = () => {
                     </Flex>
                     <Flex direction={'row'} css={{ gap: '$6' }} wrap={'wrap'}>
                         <Button type="primary" icon={<PlusCircleOutlined />}>
-                            Tambah Template Tugas
+                            Tambah Tugas
                         </Button>
                     </Flex>
                 </Flex>

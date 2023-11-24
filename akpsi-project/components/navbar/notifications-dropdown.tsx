@@ -30,27 +30,20 @@ export const NotificationsDropdown = () => {
                },
             }}
          >
-            <Dropdown.Section title="Notificacions">
+            <Dropdown.Section title="Notifikasi">
                <Dropdown.Item
                   key="1"
                   showFullDescription
-                  description="Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim."
+                  description="Agustina Widyasari menambahkan komentar pada PMR-TVRI-29."
                >
-                  📣 Edit your information
+                  📣  Komentar baru pada PMR-TVRI-29
                </Dropdown.Item>
                <Dropdown.Item
                   key="2"
                   showFullDescription
-                  description="Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim."
+                  description="Perhatikan pekerjaan yang sedang anda lakukan agar tidak melewati batas waktu pemeriksaan"
                >
-                  🚀 Say goodbye to paper receipts!
-               </Dropdown.Item>
-               <Dropdown.Item
-                  key="3"
-                  showFullDescription
-                  description="Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim."
-               >
-                  📣 Edit your information
+                  📣 Batas waktu pemeriksaan selesai tersisa 1 minggu.
                </Dropdown.Item>
             </Dropdown.Section>
          </Dropdown.Menu>

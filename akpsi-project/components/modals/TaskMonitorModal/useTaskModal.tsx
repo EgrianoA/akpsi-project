@@ -4,40 +4,18 @@ import { WarningTwoTone, UpCircleTwoTone, MenuOutlined, MinusCircleOutlined, Inb
 import type { UploadProps } from 'antd';
 import CommentSection from './commentSection'
 import ActivityTimeline from './activityTimeline'
+import allMonitorTaskList from '../../../public/dummyData/allMonitorTaskList.json'
+import allUserData from '../../../public/dummyData/userList.json'
+import { generateComplexityTag, generateStatusTagColor } from '../../../utilities/generateTag'
 
 
-
-const taskStatus = [
-    { label: <Tag color="processing">Akan Dikerjakan</Tag>, value: 'todo' },
-    { label: <Tag color="processing">Dalam Pengerjaan</Tag>, value: 'in-progress' },
-    { label: <Tag color="warning">Menunggu Informasi Lebih Lanjut</Tag>, value: 'pending' },
-    { label: <Tag color="success">Selesai</Tag>, value: 'done' }
-]
-
-const userList = [
-    {
-        value: 'A1',
-        label: 'Investigator 1',
-    },
-    {
-        value: 'B2',
-        label: 'Investigator 2',
-    },
-    {
-        value: 'C3',
-        label: 'Investigator 3',
-    },
-    {
-        value: 'D4',
-        label: 'Investigator 4',
-    },
-]
+const taskStatus = ['Akan Dikerjakan', 'Dalam Pengerjaan', 'Memerlukan Informasi Lebih Lanjut', 'Selesai']
 
 const taskPriority = [
-    { label: <Tag color="red"><WarningTwoTone twoToneColor="#fc2121" /> Urgent</Tag>, value: 'urgent' },
-    { label: <Tag color="red"><UpCircleTwoTone twoToneColor="#fc2121" /> Tinggi</Tag>, value: 'high' },
-    { label: <Tag color="warning"><MenuOutlined /> Menengah</Tag>, value: 'medium' },
-    { label: <Tag><MinusCircleOutlined /> Rendah</Tag>, value: 'low' }
+    { label: <Tag color="red"><WarningTwoTone twoToneColor="#fc2121" /> Urgent</Tag>, value: 'Urgent' },
+    { label: <Tag color="red"><UpCircleTwoTone twoToneColor="#fc2121" /> Tinggi</Tag>, value: 'Tinggi' },
+    { label: <Tag color="warning"><MenuOutlined /> Menengah</Tag>, value: 'Menengah' },
+    { label: <Tag><MinusCircleOutlined /> Rendah</Tag>, value: 'Rendah' }
 ]
 
 const uploadProps: UploadProps = {
@@ -76,9 +54,11 @@ const tabItems = [
 const TaskMonitorModal = ({
     onClose,
     visible,
+    taskNumber
 }: {
     onClose: ModalProps['onCancel'];
     visible: boolean;
+    taskNumber: string;
 }) => {
     const closeModal = useCallback(
         (e) => {
@@ -87,22 +67,48 @@ const TaskMonitorModal = ({
         [onClose]
     );
     const { Dragger } = Upload;
+    const taskData = allMonitorTaskList.find(task => task.taskNumber === taskNumber)
+
+    const investigatorList = allUserData.filter(user => user.role === 'Penyidik').map((investigator) => ({
+        label: investigator.fullName,
+        value: investigator.employeeNumber
+    }))
+
+    const taskStatusDropdown = taskStatus.map((status) => ({
+        label: <Tag color={generateStatusTagColor(status)}>{status}</Tag>,
+        value: status
+    }))
+
+    const tabItems = useMemo(() => {
+        return [
+            {
+                key: '1',
+                label: 'Komentar',
+                children: <CommentSection taskNumber={taskData.taskNumber} />,
+            },
+            {
+                key: '2',
+                label: 'Aktivitas',
+                children: <ActivityTimeline taskNumber={taskData.taskNumber} />,
+            },
+        ]
+    }, [])
     return (
         <Modal
             footer={null}
             onCancel={closeModal}
             open={visible}
-            title={'TUGAS/XI/2023 / TASK-01'}
+            title={taskData.taskNumber}
             width={'70vw'}
             destroyOnClose
         >
             <Row gutter={8}>
                 <Col span={16}>
 
-                    <Card title='Judul Tugas'>
+                    <Card title={taskData.taskName}>
                         <Space direction="vertical">
                             <b>Deskripsi Tugas:</b>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            {taskData.taskDescription}
                             <b>Lampiran: </b>
                             <Dragger {...uploadProps}>
                                 <p className="ant-upload-drag-icon">
@@ -133,10 +139,9 @@ const TaskMonitorModal = ({
                                 name="status"
                             >
                                 <Select
-                                    defaultValue="todo"
+                                    defaultValue={taskData.status}
                                     style={{ width: 180 }}
-                                    options={taskStatus}
-                                    tagRender={({ value }) => taskStatus.find(status => status.value === value)}
+                                    options={taskStatusDropdown}
                                 />
                             </Form.Item>
                             <Form.Item
@@ -144,51 +149,54 @@ const TaskMonitorModal = ({
                                 name="assignedTo"
                             >
                                 <Select
-                                    defaultValue="A1"
+                                    defaultValue={taskData.assignedTo}
                                     style={{ width: 180 }}
-                                    options={userList}
+                                    options={investigatorList}
                                 />
                             </Form.Item>
                             <Form.Item
-                                label="Prioritas"
-                                name="priority"
+                                label="Kompleksitas"
+                                name="complexity"
                             >
                                 <Select
-                                    defaultValue="medium"
+                                    defaultValue={taskData.priority}
                                     style={{ width: 180 }}
                                     options={taskPriority}
-                                    tagRender={({ value }) => taskPriority.find(priority => priority.value === value)}
                                 />
                             </Form.Item>
                             <Form.Item
                                 label="Estimasi pemeriksaan"
                                 name="estimation"
                             >
-                                <InputNumber addonAfter="Hari" step="0.5" style={{ maxWidth: '120px' }} defaultValue='1' />
+                                <InputNumber addonAfter="Hari" step="0.5" style={{ maxWidth: '120px' }} defaultValue={taskData.estimation} />
                             </Form.Item>
                         </Form>
                     </Card>
                 </Col>
 
             </Row>
-        </Modal>
+        </Modal >
     )
 }
 const useTaskMonitorModal = () => {
     const [visible, setVisible] = useState(false);
+    const [currentTaskNumber, setCurrentTaskNumber] = useState(null)
 
     const actions = useMemo(() => {
         const close = () => setVisible(false);
 
         return {
-            open: () => setVisible(true),
+            open: (taskNumber: string) => {
+                setVisible(true)
+                setCurrentTaskNumber(taskNumber)
+            },
             close,
         };
     }, [setVisible]);
 
     return {
         ...actions,
-        render: () => <TaskMonitorModal onClose={actions.close} visible={visible} />,
+        render: () => currentTaskNumber && <TaskMonitorModal onClose={actions.close} visible={visible} taskNumber={currentTaskNumber} />,
     };
 }
 
