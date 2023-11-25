@@ -10,10 +10,11 @@ import dayjs from 'dayjs'
 import {
    PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend
 } from 'recharts'
-import useTaskModal from '../components/modals/TaskMonitorModal/useTaskModal'
+import useTaskMonitorModal from '../components/modals/TaskMonitorModal/useTaskMonitorModal'
 import allUserData from '../public/dummyData/userList.json'
 import allMonitorTaskList from '../public/dummyData/allMonitorTaskList.json'
-import { generatePriorityTag, generateStatusTagColor } from '../utilities/generateTag'
+import taskList from '../public/dummyData/taskList.json'
+import { generateComplexityTag, generateStatusTagColor } from '../utilities/generateTag'
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -60,8 +61,6 @@ const progressBarData = [
       "color": "#bfbfbf"
    }
 ]
-
-
 
 interface DataType {
    key: string;
@@ -127,7 +126,7 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const Home: NextPage = () => {
-   const taskModal = useTaskModal();
+   const taskModal = useTaskMonitorModal();
    const personalUserData = allUserData[0]
    const [taskTableData, taskStatusCount, taskChart] = useMemo(() => {
       const currentActiveTaskList = allMonitorTaskList.filter(task => task.assignedTo === personalUserData.employeeNumber)
@@ -147,15 +146,15 @@ const Home: NextPage = () => {
             statusCountMap.set(data.status, 1)
          }
 
-         if (data.status === 'Dalam Pengerjaan') {
+         if (data.status !== 'Selesai') {
             taskTableData.push({
                key: index,
                taskNo: data.taskNumber,
-               taskTitle: data.taskName,
+               taskTitle: taskList.find(task => task.taskId === data.taskId).taskName,
                supervisedBy: allUserData.find(user => user.employeeNumber === data.assignedBy).fullName,
-               priority: generatePriorityTag(data.priority),
+               priority: generateComplexityTag(data.complexity),
                estimationWorkingTime: data.estimation,
-               status: <Tag color={generateStatusTagColor(data.status)}>{data.status}</Tag>
+               status: <Tag color={generateStatusTagColor(data.status)} style={{ whiteSpace: 'break-spaces' }}>{data.status}</Tag>
             });
          }
 
@@ -178,7 +177,7 @@ const Home: NextPage = () => {
 
 
       return [taskTableData, taskStatusCount, taskChart]
-   }, [])
+   }, [allMonitorTaskList, taskList, personalUserData])
 
    return (
       <Flex

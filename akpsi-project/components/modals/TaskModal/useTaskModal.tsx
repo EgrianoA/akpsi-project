@@ -1,12 +1,16 @@
 import { Row, Col, Card, Modal, ModalProps, Form, Input, Space, Button, Select } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
+import taskCategory from '../../../public/dummyData/taskCategory.json'
+import taskList from '../../../public/dummyData/taskList.json'
 
 const TaskModal = ({
     onClose,
     visible,
+    taskId
 }: {
     onClose: ModalProps['onCancel'];
     visible: boolean;
+    taskId: string;
 }) => {
     const closeModal = useCallback(
         (e) => {
@@ -16,6 +20,8 @@ const TaskModal = ({
     );
 
     const { TextArea } = Input;
+    const taskDetail = useMemo(() => taskList.find(task => task.taskId === taskId), [taskList, taskId])
+    const taskCategoryOption = useMemo(() => taskCategory.map(category => ({ value: category.taskCategoryId, label: category.categoryName })), [taskCategory])
 
     return (
         <Modal
@@ -43,27 +49,24 @@ const TaskModal = ({
                                     label="Nama Tugas"
                                     name="taskName"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={taskDetail?.taskName} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Kategori Tugas"
                                     name="taskCategory"
                                 >
                                     <Select
-                                        defaultValue=""
+                                        defaultValue={taskDetail?.taskCategory}
                                         style={{ width: 400 }}
 
-                                        options={[
-                                            { value: 'category1', label: 'Category A' },
-                                            { value: 'category2', label: 'Category B' }
-                                        ]}
+                                        options={taskCategoryOption}
                                     />
                                 </Form.Item>
                                 <Form.Item
                                     label="Deskripsi Tugas"
                                     name="taskDescription"
                                 >
-                                    <TextArea rows={4} />
+                                    <TextArea rows={4} defaultValue={taskDetail?.taskDescription} />
                                 </Form.Item>
                             </Form>
                         </Card>
@@ -83,19 +86,23 @@ const TaskModal = ({
 }
 const useTaskModal = () => {
     const [visible, setVisible] = useState(false);
+    const [selectedTaskId, setSelectedTaskId] = useState()
 
     const actions = useMemo(() => {
         const close = () => setVisible(false);
 
         return {
-            open: () => setVisible(true),
+            open: (taskId: string) => {
+                setSelectedTaskId(taskId)
+                setVisible(true)
+            },
             close,
         };
     }, [setVisible]);
 
     return {
         ...actions,
-        render: () => <TaskModal onClose={actions.close} visible={visible} />,
+        render: () => selectedTaskId && <TaskModal onClose={actions.close} taskId={selectedTaskId} visible={visible} />,
     };
 }
 

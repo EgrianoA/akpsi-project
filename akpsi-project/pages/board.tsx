@@ -6,8 +6,12 @@ import { Flex } from '../components/styles/flex';
 import { Input, Table, Tag, Row, Col, Card, Statistic, List, Button, Space, Descriptions } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, ContainerOutlined, PlusCircleOutlined } from '@ant-design/icons'
-import useTaskModal from '../components/modals/TaskMonitorModal/useTaskModal'
+import useTaskMonitorModal from '../components/modals/TaskMonitorModal/useTaskMonitorModal'
 import dayjs from 'dayjs'
+import allUserData from '../public/dummyData/userList.json'
+import allMonitorTaskList from '../public/dummyData/allMonitorTaskList.json'
+import taskList from '../public/dummyData/taskList.json'
+import { generateComplexityTag, generateStatusTagColor } from '../utilities/generateTag'
 
 
 interface DataType {
@@ -72,29 +76,6 @@ const columns: ColumnsType<DataType> = [
     },
 ];
 
-const dataSource = [
-    {
-        key: '1',
-        taskNo: 'TASK-01',
-        taskTitle: 'Tugas A',
-        assignedTo: 'Investigator 1',
-        supervisedBy: 'Team Lead 1',
-        complexity: <Tag color="warning">Menengah</Tag>,
-        estimationWorkingTime: 1,
-        status: <Tag color="processing">Dalam Pengerjaan</Tag>,
-    },
-    {
-        key: '2',
-        taskNo: 'TASK-02',
-        taskTitle: 'Tugas B',
-        assignedTo: 'Investigator 3',
-        supervisedBy: 'Sub Team Lead 1',
-        complexity: <Tag color="red">Tinggi</Tag>,
-        estimationWorkingTime: 2,
-        status: <Tag color="processing">Dalam Pengerjaan</Tag>,
-    },
-];
-
 const reportTimelineItems: { key: string; label: string; value: string }[] = [
     {
         key: '1',
@@ -142,7 +123,58 @@ const statusReportItems = [
 ]
 
 const Board = () => {
-    const taskModal = useTaskModal();
+    const taskModal = useTaskMonitorModal();
+    const personalUserData = allUserData[0]
+    const [taskTableData, taskStatusCount, taskChart] = useMemo(() => {
+        const currentActiveTaskList = allMonitorTaskList.filter(task => task.assignedTo === personalUserData.employeeNumber)
+        const taskTableData = []
+        const taskStatusCount = [{
+            key: 'Total Pemeriksaan',
+            label: 'Total Pemeriksaan',
+            children: <Tag>{currentActiveTaskList.length}</Tag>,
+            span: 3
+        }]
+        const taskChart = []
+        const statusCountMap = new Map()
+        currentActiveTaskList.forEach((data, index) => {
+            if (statusCountMap.get(data.status)) {
+                statusCountMap.set(data.status, statusCountMap.get(data.status) + 1)
+            } else {
+                statusCountMap.set(data.status, 1)
+            }
+
+            taskTableData.push({
+                key: index,
+                taskNo: data.taskNumber,
+                taskTitle: taskList.find(task => task.taskId === data.taskId).taskName,
+                assignedTo: allUserData.find(user => user.employeeNumber === data.assignedTo).fullName,
+                supervisedBy: allUserData.find(user => user.employeeNumber === data.assignedBy).fullName,
+                complexity: generateComplexityTag(data.complexity),
+                estimationWorkingTime: data.estimation,
+                status: <Tag color={generateStatusTagColor(data.status)} style={{ whiteSpace: 'break-spaces' }}>{data.status}</Tag>
+            });
+
+        });
+
+        statusCountMap.forEach((values, keys) => {
+            taskStatusCount.push({
+                key: keys,
+                label: keys,
+                children: <Tag color={generateStatusTagColor(keys)}>{values}</Tag>,
+                span: 2
+            })
+
+            taskChart.push({
+                "name": keys,
+                "value": values,
+                "color": generateStatusTagColor(keys)
+            })
+        })
+
+
+        return [taskTableData, taskStatusCount, taskChart]
+    }, [allMonitorTaskList, taskList, personalUserData])
+
     return (
         <Flex
             css={{
@@ -173,7 +205,7 @@ const Board = () => {
                 <Row gutter={16}>
                     <Col span={12}>
                         <Card bordered={false} title='Status Pemeriksaan' >
-                            <Descriptions title="Detail Tim" bordered items={statusReportItems} />
+                            <Descriptions title="" bordered items={taskStatusCount} />
                         </Card>
                     </Col>
                     <Col span={12}>
@@ -222,10 +254,9 @@ const Board = () => {
                         </Button>
                     </Flex>
                 </Flex>
-                <Table columns={columns} dataSource={dataSource} style={{ marginTop: '20px' }} onRow={(row: any) => ({
+                <Table columns={columns} dataSource={taskTableData} style={{ marginTop: '20px' }} onRow={(row: any) => ({
                     onClick: () => {
-                        console.log(row)
-                        taskModal.open();
+                        taskModal.open(row.taskNo);
                     },
                     style: { cursor: 'pointer' },
                 })} />

@@ -3,7 +3,10 @@ import { useCallback, useMemo, useState } from 'react';
 import type { ColumnsType, TableRowSelection } from 'antd/es/table/interface';
 import type { TransferItem, TransferProps } from 'antd/es/transfer';
 import difference from 'lodash/difference';
-
+import teamList from '../../../public/dummyData/teamList.json'
+import userList from '../../../public/dummyData/userList.json'
+import allTask from '../../../public/dummyData/taskList.json'
+import allTaskTemplate from '../../../public/dummyData/taskTemplate.json'
 
 
 interface RecordType {
@@ -77,67 +80,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }: TableTransfe
     </Transfer>
 );
 
-const taskData = [
-    {
-        key: 'A1',
-        taskName: 'Task A',
-        taskDescription: 'Task A Description',
-        parentTask: '1'
-    },
-    {
-        key: 'B2',
-        taskName: 'Task B',
-        taskDescription: 'Task B Description',
-        parentTask: '1'
-    },
-    {
-        key: 'C3',
-        taskName: 'Task C',
-        taskDescription: 'Task C Description',
-        parentTask: '1'
-    },
-    {
-        key: 'D4',
-        taskName: 'Task D',
-        taskDescription: 'Task D Description',
-        parentTask: '1'
-    },
-    {
-        key: 'G7',
-        taskName: 'Task G',
-        taskDescription: 'Task G Description',
-        parentTask: '2'
-    },
-    {
-        key: 'H8',
-        taskName: 'Task H',
-        taskDescription: 'Task H Description',
-        parentTask: '2'
-    },
-];
-
 const originTaskTargetKeys = ['G7', 'H8']
-
-const memberData = [
-    {
-        key: 'A1',
-        memberName: 'Investigator 1',
-    },
-    {
-        key: 'B2',
-        memberName: 'Investigator 2',
-    },
-    {
-        key: 'C3',
-        memberName: 'Investigator 3',
-    },
-    {
-        key: 'D4',
-        memberName: 'Investigator 4',
-    },
-];
-
-const originMemberTargetKeys = ['B2', 'D4']
 
 const taskTableColumn = [
     {
@@ -163,19 +106,31 @@ const memberTableColumn = [
 const TeamModal = ({
     onClose,
     visible,
+    teamId,
 }: {
     onClose: ModalProps['onCancel'];
     visible: boolean;
+    teamId: string;
 }) => {
-    const closeModal = useCallback(
-        (e) => {
-            onClose(e);
-        },
-        [onClose]
-    );
+    const allTaskData = useMemo(() => allTask.map(task => ({
+        key: task.taskId,
+        taskName: task.taskName,
+        taskDescription: task.taskDescription
+    })), [allTask])
+    const allTaskTemplateData = useMemo(() => allTaskTemplate.map(template => ({
+        value: template.templateId,
+        label: template.templateName,
+        taskList: template.taskList
+    })), [allTaskTemplate])
+    const teamDetails = useMemo(() => teamList.find(team => team.teamId === teamId), [teamList, teamId])
+    const teamLeadOptions = useMemo(() => userList.filter(user => user.role === 'Ketua Tim').map(teamLead => ({ value: teamLead.employeeNumber, label: teamLead.fullName })), [userList])
+    const subteamLeadOptions = useMemo(() => userList.filter(user => user.role === 'Ketua Subtim').map(subteamLead => ({ value: subteamLead.employeeNumber, label: subteamLead.fullName })), [userList])
+    const investigatorMemberList = useMemo(() => userList.filter(user => user.role === 'Penyidik').map(investigator => ({ key: investigator.employeeNumber, memberName: investigator.fullName })), [userList])
 
-    const [taskTargetKeys, setTaskTargetKeys] = useState<string[]>(originTaskTargetKeys);
-    const [memberTargetKeys, setMemberTargetKeys] = useState<string[]>(originMemberTargetKeys);
+    const [selectedTemplate, setSelectedTemplate] = useState<string>('')
+    const [taskTargetKeys, setTaskTargetKeys] = useState<string[]>(teamDetails.teamTask);
+    const [memberTargetKeys, setMemberTargetKeys] = useState<string[]>(teamDetails.teamMember);
+    const [taskData, setTaskData] = useState(allTaskData)
     const onTaskChange = (nextTargetKeys: string[]) => {
         setTaskTargetKeys(nextTargetKeys);
     };
@@ -183,12 +138,19 @@ const TeamModal = ({
         setMemberTargetKeys(nextTargetKeys);
     };
 
+    const closeModal = useCallback(
+        (e) => {
+            onClose(e);
+        },
+        [onClose]
+    );
+
     return (
         <Modal
             footer={null}
             onCancel={closeModal}
             open={visible}
-            title={'Tim-01'}
+            title={`${teamDetails.teamId} - ${teamDetails.teamName}`}
             width={'70vw'}
             destroyOnClose
         >
@@ -209,26 +171,23 @@ const TeamModal = ({
                                     label="Nama Tim"
                                     name="teamName"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={teamDetails.teamName} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Lokasi Penyelidikan"
                                     name="investigationLocation"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={teamDetails.investigationLocation} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Nama Ketua Tim"
                                     name="teamLead"
                                 >
                                     <Select
-                                        defaultValue=""
+                                        defaultValue={teamDetails.teamLead}
                                         style={{ width: 400 }}
 
-                                        options={[
-                                            { value: 'teamlead1', label: 'Team Lead 1' },
-                                            { value: 'teamlead2', label: 'Team Lead 2' }
-                                        ]}
+                                        options={teamLeadOptions}
                                     />
                                 </Form.Item>
                                 <Form.Item
@@ -236,11 +195,9 @@ const TeamModal = ({
                                     name="subTeamLead"
                                 >
                                     <Select
-                                        defaultValue=""
+                                        defaultValue={teamDetails.subteamLead}
                                         style={{ width: 400 }}
-                                        options={[
-                                            { value: 'subTeamLead1', label: 'Sub Team Lead 1' }
-                                        ]}
+                                        options={subteamLeadOptions}
                                     />
                                 </Form.Item>
                             </Form>
@@ -252,7 +209,7 @@ const TeamModal = ({
                         <Card title="Daftar Anggota">
                             <Space direction="vertical" style={{ display: 'flex' }}>
                                 <TableTransfer
-                                    dataSource={memberData}
+                                    dataSource={investigatorMemberList}
                                     targetKeys={memberTargetKeys}
                                     showSearch={true}
                                     onChange={onMemberChange}
@@ -268,17 +225,32 @@ const TeamModal = ({
                 </Row>
                 <Row gutter={8}>
                     <Col span={24}>
-                        <Card title="Daftar Task">
+                        <Card title="Daftar Tugas Pemeriksaan">
                             <Space direction="vertical" style={{ display: 'flex' }}>
                                 <Space>
                                     Template Tugas:
                                     <Select
-                                        defaultValue=""
+                                        allowClear
+                                        defaultValue={selectedTemplate}
                                         style={{ width: 400 }}
-                                        options={[
-                                            { value: 'taskTemplate1', label: 'Task Template 1' },
-                                            { value: 'taskTemplate2', label: 'Task Template 2' }
-                                        ]}
+                                        options={allTaskTemplateData}
+                                        onChange={(value) => {
+                                            setSelectedTemplate(value || '')
+                                            if (!value) {
+                                                setTaskData(allTaskData)
+                                            } else {
+                                                const selectedTaskTemplate = allTaskTemplateData.find(template => template.value === value)
+                                                const taskByTemplate = allTaskData.filter(task => selectedTaskTemplate.taskList.some(taskTemplateList => taskTemplateList === task.key))
+                                                setTaskData(taskByTemplate.map(task => ({
+                                                    key: task.key,
+                                                    taskName: task.taskName,
+                                                    taskDescription: task.taskDescription
+                                                })))
+
+                                            }
+
+
+                                        }}
                                     />
                                 </Space>
 
@@ -311,19 +283,25 @@ const TeamModal = ({
 }
 const useTeamModal = () => {
     const [visible, setVisible] = useState(false);
+    const [teamId, setTeamId] = useState(null);
 
     const actions = useMemo(() => {
-        const close = () => setVisible(false);
+        const close = () => { 
+            setTeamId();
+            setVisible(false); }
 
         return {
-            open: () => setVisible(true),
+            open: (teamId: string) => {
+                setTeamId(teamId)
+                setVisible(true)
+            },
             close,
         };
     }, [setVisible]);
 
     return {
         ...actions,
-        render: () => <TeamModal onClose={actions.close} visible={visible} />,
+        render: () => teamId && <TeamModal onClose={actions.close} teamId={teamId} visible={visible} />,
     };
 }
 

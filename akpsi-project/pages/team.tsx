@@ -7,73 +7,69 @@ import { Input, Table, Button, Descriptions } from 'antd';
 import { SearchOutlined, TeamOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useTeamModal from '../components/modals/TeamModal/useTeamModal'
 import type { DescriptionsProps } from 'antd';
+import rawTeamList from '../public/dummyData/teamList.json'
+import allUser from '../public/dummyData/userList.json'
 
 
 const columns = [
     {
         title: 'Nama Tim',
-        dataIndex: 'taskTemplateName',
-        key: 'taskTemplateName',
+        dataIndex: 'teamName',
+        key: 'teamName',
     },
 ];
 
-const dataSource = [
-    {
-        key: '1',
-        taskTemplateName: 'Tim-01',
-    },
-    {
-        key: '2',
-        taskTemplateName: 'Tim-02',
-    },
-];
+const teamDescription = (record) => {
+    const teamDetails = rawTeamList.find(team => team.teamId === record.key)
+    const rowDescription: DescriptionsProps['items'] = [
+        {
+            key: '1',
+            label: 'Nama Tim',
+            children: teamDetails.teamName,
+            span: 2
+        },
+        {
+            key: '2',
+            label: 'Lokasi Penyelidikan',
+            children: teamDetails.investigationLocation,
+            span: 2
+        },
+        {
+            key: '3',
+            label: 'Ketua Tim',
+            children: allUser.find(user => user.employeeNumber === teamDetails.teamLead)?.fullName || '',
+            span: 2
+        },
+        {
+            key: '4',
+            label: 'Ketua Sub-Team',
+            children: allUser.find(user => user.employeeNumber === teamDetails.subteamLead)?.fullName || '',
+            span: 2
+        },
+        {
+            key: '5',
+            label: 'Anggota',
+            children: (
+                <>
+                    {teamDetails.teamMember.map(member => (
+                        <>
+                            {allUser.find(user => user.employeeNumber === member)?.fullName || ''}
+                            < br />
+                        </>
+                    ))}
+                </>
+            ),
+            span: 12
+        }
+    ];
 
-const rowDescription: DescriptionsProps['items'] = [
-    {
-        key: '1',
-        label: 'Nama Tim',
-        children: 'Tim-01',
-        span: 2
-    },
-    {
-        key: '2',
-        label: 'Penempatan Penyelidikan',
-        children: 'Lembaga X',
-        span: 2
-    },
-    {
-        key: '3',
-        label: 'Ketua Tim',
-        children: 'Team Lead 1',
-        span: 2
-    },
-    {
-        key: '4',
-        label: 'Ketua Sub-Team',
-        children: 'Sub Team Lead 1',
-        span: 2
-    },
-    {
-        key: '5',
-        label: 'Anggota',
-        children: (
-            <>
-                Investigator 1
-                <br />
-                Investigator 2
-                <br />
-            </>
-        ),
-        span: 12
-    }
-];
-
-const teamDescription = () => {
     return <Descriptions title="Detail Tim" bordered items={rowDescription} />;
 }
 
 const Team = () => {
     const teamModal = useTeamModal();
+
+    const teamList = useMemo(() => { return rawTeamList.map(team => ({ key: team.teamId, teamName: team.teamName })) }, [rawTeamList])
     return (
         <Flex
             css={{
@@ -114,7 +110,7 @@ const Team = () => {
                     align={'center'}
                 >
                     <Input
-                        placeholder="Cari Tugas"
+                        placeholder="Cari Tim"
                         suffix={
                             <SearchOutlined />
                         }
@@ -129,13 +125,12 @@ const Team = () => {
             <br />
             <Table
                 columns={columns}
-                dataSource={dataSource}
-                expandable={{ expandedRowRender: teamDescription, defaultExpandedRowKeys: ['0'] }}
+                dataSource={teamList}
+                expandable={{ expandedRowRender: (record) => teamDescription(record), defaultExpandedRowKeys: ['0'] }}
                 style={{ marginTop: '20px' }}
                 onRow={(row: any) => ({
                     onClick: () => {
-                        console.log(row)
-                        teamModal.open();
+                        teamModal.open(row.key);
                     },
                     style: { cursor: 'pointer' },
                 })} />

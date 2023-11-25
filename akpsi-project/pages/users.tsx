@@ -7,8 +7,9 @@ import { Flex } from '../components/styles/flex';
 import { Input, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, UserOutlined } from '@ant-design/icons'
-import userData from '../../akpsi-backend/fixture/user.json'
+import userList from '../public/dummyData/userList.json'
 import useUserModal from '../components/modals/UserModal/useUserModal'
+import {generateRoleTagColor} from '../utilities/generateTag'
 
 interface DataType {
    key: string;
@@ -35,12 +36,12 @@ const columns: ColumnsType<DataType> = [
       key: 'fullName',
    },
    {
-      title: 'Role',
+      title: 'Peran',
       key: 'role',
       dataIndex: 'role',
       render: (_, { role }) => (
          <>
-            <Tag color="lime" key={role}>
+            <Tag color={generateRoleTagColor(role)} key={role}>
                {role.toUpperCase()}
             </Tag>
          </>
@@ -51,7 +52,7 @@ const columns: ColumnsType<DataType> = [
 const Users = () => {
    const userModal = useUserModal();
    const dataSource = useMemo(() => {
-      return userData.map((user) => ({
+      return userList.map((user) => ({
          key: user.userId,
          employeeNumber: user.employeeNumber,
          username: user.username,
@@ -113,8 +114,7 @@ const Users = () => {
             style={{ marginTop: '20px' }}
             onRow={(row: any) => ({
                onClick: () => {
-                  console.log(row)
-                  userModal.open();
+                  userModal.open(row.employeeNumber);
                },
                style: { cursor: 'pointer' },
             })}

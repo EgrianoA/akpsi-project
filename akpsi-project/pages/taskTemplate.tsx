@@ -7,6 +7,8 @@ import { Input, Table, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, FolderOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useTaskTemplateModal from '../components/modals/TaskTemplateModal/useTaskTemplateModal'
+import allTaskTemplate from '../public/dummyData/taskTemplate.json'
+import allTaskList from '../public/dummyData/taskList.json'
 
 
 interface DataType {
@@ -22,56 +24,6 @@ const columns: ColumnsType<DataType> = [
     },
 ];
 
-const dataSource = [
-    {
-        key: '1',
-        taskTemplateName: 'Template Tugas-01',
-    },
-    {
-        key: '2',
-        taskTemplateName: 'Template Tugas-02',
-    },
-];
-
-const taskDataSource = [
-    {
-        key: 'A1',
-        taskName: 'Task A',
-        taskDescription: 'Task A Description',
-        parentTask: '1'
-    },
-    {
-        key: 'B2',
-        taskName: 'Task B',
-        taskDescription: 'Task B Description',
-        parentTask: '1'
-    },
-    {
-        key: 'C3',
-        taskName: 'Task C',
-        taskDescription: 'Task C Description',
-        parentTask: '1'
-    },
-    {
-        key: 'D4',
-        taskName: 'Task D',
-        taskDescription: 'Task D Description',
-        parentTask: '1'
-    },
-    {
-        key: 'G7',
-        taskName: 'Task G',
-        taskDescription: 'Task G Description',
-        parentTask: '2'
-    },
-    {
-        key: 'H8',
-        taskName: 'Task H',
-        taskDescription: 'Task H Description',
-        parentTask: '2'
-    },
-]
-
 const taskColumn = [
     {
         title: 'Nama Tugas',
@@ -85,12 +37,24 @@ const taskColumn = [
     },
 ]
 
-const taskListTable = (parentRecord) => {
-    return <Table columns={taskColumn} dataSource={taskDataSource.filter(task => task.parentTask === parentRecord.key)} pagination={false} />;
+const taskListTable = (taskList) => {
+    return <Table columns={taskColumn} dataSource={taskList} pagination={false} />;
 }
 
 const TaskTemplate = () => {
     const taskTemplateModal = useTaskTemplateModal();
+    const taskTemplateData = useMemo(() => allTaskTemplate.map(template => ({
+        key: template.templateId,
+        taskTemplateName: template.templateName,
+        taskList: template.taskList.map(taskInTemplate => {
+            const taskDetail = allTaskList.find(task => task.taskId === taskInTemplate)
+            return {
+                key: taskDetail.taskId,
+                taskName: taskDetail.taskName,
+                taskDescription: taskDetail.taskDescription
+            }
+        })
+    })), [allTaskTemplate, allTaskList])
     return (
         <Flex
             css={{
@@ -131,7 +95,7 @@ const TaskTemplate = () => {
                     align={'center'}
                 >
                     <Input
-                        placeholder="Cari Tugas"
+                        placeholder="Cari Template"
                         suffix={
                             <SearchOutlined />
                         }
@@ -146,13 +110,12 @@ const TaskTemplate = () => {
             <br />
             <Table
                 columns={columns}
-                dataSource={dataSource}
-                expandable={{ expandedRowRender: taskListTable, defaultExpandedRowKeys: ['0'] }}
+                dataSource={taskTemplateData}
+                expandable={{ expandedRowRender: (record) => taskListTable(record.taskList), defaultExpandedRowKeys: ['0'] }}
                 style={{ marginTop: '20px' }}
                 onRow={(row: any) => ({
                     onClick: () => {
-                        console.log(row)
-                        taskTemplateModal.open();
+                        taskTemplateModal.open(row.key);
                     },
                     style: { cursor: 'pointer' },
                 })} />

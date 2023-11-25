@@ -4,6 +4,8 @@ import { WarningTwoTone, UpCircleTwoTone, MenuOutlined, MinusCircleOutlined, Inb
 import type { UploadProps } from 'antd';
 import CommentSection from './commentSection'
 import ActivityTimeline from './activityTimeline'
+import allTask from '../../../public/dummyData/taskList.json'
+import taskCategory from '../../../public/dummyData/taskCategory.json'
 import allMonitorTaskList from '../../../public/dummyData/allMonitorTaskList.json'
 import allUserData from '../../../public/dummyData/userList.json'
 import { generateComplexityTag, generateStatusTagColor } from '../../../utilities/generateTag'
@@ -67,7 +69,14 @@ const TaskMonitorModal = ({
         [onClose]
     );
     const { Dragger } = Upload;
-    const taskData = allMonitorTaskList.find(task => task.taskNumber === taskNumber)
+    const taskData = useMemo(() => allMonitorTaskList.find(task => task.taskNumber === taskNumber), [allMonitorTaskList, taskNumber])
+    const taskDescription = useMemo(() => {
+        const taskDetail = allTask.find(task => task.taskId === taskData.taskId)
+        return {
+            ...taskDetail,
+            taskCategoryName: taskCategory.find(category => category.taskCategoryId === taskDetail.taskCategory).categoryName
+        }
+    }, [taskData, allTask, taskCategory])
 
     const investigatorList = allUserData.filter(user => user.role === 'Penyidik').map((investigator) => ({
         label: investigator.fullName,
@@ -92,7 +101,7 @@ const TaskMonitorModal = ({
                 children: <ActivityTimeline taskNumber={taskData.taskNumber} />,
             },
         ]
-    }, [])
+    }, [taskData])
     return (
         <Modal
             footer={null}
@@ -105,10 +114,12 @@ const TaskMonitorModal = ({
             <Row gutter={8}>
                 <Col span={16}>
 
-                    <Card title={taskData.taskName}>
+                    <Card title={taskDescription.taskName}>
                         <Space direction="vertical">
+                            <b>Kategori Tugas:</b>
+                            {taskDescription.taskCategoryName}
                             <b>Deskripsi Tugas:</b>
-                            {taskData.taskDescription}
+                            {taskDescription.taskDescription}
                             <b>Lampiran: </b>
                             <Dragger {...uploadProps}>
                                 <p className="ant-upload-drag-icon">
@@ -159,7 +170,7 @@ const TaskMonitorModal = ({
                                 name="complexity"
                             >
                                 <Select
-                                    defaultValue={taskData.priority}
+                                    defaultValue={taskData.complexity}
                                     style={{ width: 180 }}
                                     options={taskPriority}
                                 />

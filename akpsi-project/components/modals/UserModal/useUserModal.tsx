@@ -1,12 +1,17 @@
 import { Row, Col, Card, Modal, ModalProps, Form, Input, Space, Button, Select } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
+import userList from '../../../public/dummyData/userList.json'
+
+const userRole = [{ value: 'Admin' }, { value: 'Ketua Tim' }, { value: 'Ketua Subtim' }, { value: 'Penyidik' }]
 
 const UserModal = ({
     onClose,
     visible,
+    employeeNumber
 }: {
     onClose: ModalProps['onCancel'];
     visible: boolean;
+    employeeNumber: string
 }) => {
     const closeModal = useCallback(
         (e) => {
@@ -16,13 +21,14 @@ const UserModal = ({
     );
 
     const { TextArea } = Input;
+    const employeeDetail = useMemo(() => userList.find(user => user.employeeNumber === employeeNumber), [userList, employeeNumber])
 
     return (
         <Modal
             footer={null}
             onCancel={closeModal}
             open={visible}
-            title={'BPK-001'}
+            title={employeeDetail.employeeNumber}
             width={'70vw'}
             destroyOnClose
         >
@@ -43,25 +49,29 @@ const UserModal = ({
                                     label="No. Karyawan"
                                     name="employeeId"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={employeeDetail.employeeNumber} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Username"
                                     name="username"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={employeeDetail.username} />
                                 </Form.Item>
                                 <Form.Item
                                     label="Nama Lengkap Karyawan"
                                     name="fullname"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={employeeDetail.fullName} />
                                 </Form.Item>
                                 <Form.Item
-                                    label="Posisi"
+                                    label="Peran"
                                     name="role"
                                 >
-                                    <Input placeholder="" />
+                                    <Select
+                                        defaultValue={employeeDetail.role}
+                                        style={{ width: 180 }}
+                                        options={userRole}
+                                    />
                                 </Form.Item>
                             </Form>
                         </Card>
@@ -73,19 +83,23 @@ const UserModal = ({
 }
 const useUserModal = () => {
     const [visible, setVisible] = useState(false);
+    const [employeeNumber, setEmployeeNumber] = useState();
 
     const actions = useMemo(() => {
         const close = () => setVisible(false);
 
         return {
-            open: () => setVisible(true),
+            open: (employeeNumber: string) => {
+                setEmployeeNumber(employeeNumber)
+                setVisible(true)
+            },
             close,
         };
     }, [setVisible]);
 
     return {
         ...actions,
-        render: () => <UserModal onClose={actions.close} visible={visible} />,
+        render: () => employeeNumber && <UserModal employeeNumber={employeeNumber} onClose={actions.close} visible={visible} />,
     };
 }
 

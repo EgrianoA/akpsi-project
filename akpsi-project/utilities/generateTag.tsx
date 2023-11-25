@@ -1,11 +1,11 @@
 import { Tag } from 'antd'
-export const generatePriorityTag = (priority: string) => {
+export const generateComplexityTag = (priority: string) => {
     switch (priority) {
         case 'Urgent':
         case 'Tinggi':
             return <Tag color="#ff4d4f">{priority}</Tag>
         case 'Menengah':
-            return <Tag color="#fadb14">{priority}</Tag>
+            return <Tag color="#d4b106">{priority}</Tag>
         case 'Rendah':
             return <Tag color="#52c41a">{priority}</Tag>
         default:
@@ -20,8 +20,22 @@ export const generateStatusTagColor = (status: string) => {
         case 'Dalam Pengerjaan':
             return "#1677ff"
         case 'Memerlukan Informasi Lebih Lanjut':
-            return "#fadb14"
+            return "#d4b106"
         default:
             return "#bfbfbf"
+    }
+}
+
+export const generateRoleTagColor = (status: string) => {
+    switch (status) {
+        case 'Admin':
+            return "volcano"
+        case 'Ketua Tim':
+        case 'Ketua Subtim':
+            return "gold"
+        case 'Penyidik':
+            return "blue"
+        default:
+            return ""
     }
 }

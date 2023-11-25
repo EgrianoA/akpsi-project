@@ -1,12 +1,15 @@
 import { Row, Col, Card, Modal, ModalProps, Form, Input, Space, Button } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
+import taskCategory from '../../../public/dummyData/taskCategory.json'
 
 const TaskCategoryModal = ({
     onClose,
     visible,
+    taskCategoryId
 }: {
     onClose: ModalProps['onCancel'];
     visible: boolean;
+    taskCategoryId: string
 }) => {
     const closeModal = useCallback(
         (e) => {
@@ -14,6 +17,8 @@ const TaskCategoryModal = ({
         },
         [onClose]
     );
+
+    const taskCategoryDetail = useMemo(() => taskCategory.find(category => category.taskCategoryId === taskCategoryId), [taskCategory, taskCategoryId])
 
     const { TextArea } = Input;
 
@@ -43,7 +48,7 @@ const TaskCategoryModal = ({
                                     label="Name Kategori Tugas"
                                     name="taskCategoryName"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={taskCategoryDetail.categoryName} />
                                 </Form.Item>
                             </Form>
                         </Card>
@@ -63,19 +68,23 @@ const TaskCategoryModal = ({
 }
 const useTaskCategoryModal = () => {
     const [visible, setVisible] = useState(false);
+    const [taskCategoryId, setTaskCategoryId] = useState();
 
     const actions = useMemo(() => {
         const close = () => setVisible(false);
 
         return {
-            open: () => setVisible(true),
+            open: (selectedTaskCategoryId: string) => {
+                setTaskCategoryId(selectedTaskCategoryId)
+                setVisible(true)
+            },
             close,
         };
     }, [setVisible]);
 
     return {
         ...actions,
-        render: () => <TaskCategoryModal onClose={actions.close} visible={visible} />,
+        render: () => taskCategoryId && <TaskCategoryModal onClose={actions.close} taskCategoryId={taskCategoryId} visible={visible} />,
     };
 }
 

@@ -57,7 +57,7 @@ export const Accounts = () => {
          fullName: user.fullName,
          role: user.role
       }))
-   }, [])
+   }, [userData])
    return (
       <Flex
          css={{

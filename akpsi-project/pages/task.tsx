@@ -8,7 +8,8 @@ import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, ContainerOutlined, PlusCircleOutlined, FileExcelOutlined, BookOutlined } from '@ant-design/icons'
 import useTaskModal from '../components/modals/TaskModal/useTaskModal'
 import useUploadExcelModal from '../components/modals/TaskModal/useUploadExcelModal'
-import dayjs from 'dayjs'
+import taskList from '../public/dummyData/taskList.json'
+import taskCategoryList from '../public/dummyData/taskCategory.json'
 
 
 interface DataType {
@@ -30,26 +31,21 @@ const columns: ColumnsType<DataType> = [
     },
 ];
 
-const dataSource = [
-    {
-        key: '1',
-        taskTitle: 'Tugas A',
-        taskCategory: 'Category A',
-    },
-    {
-        key: '2',
-        taskTitle: 'Tugas B',
-        taskCategory: 'Category B',
-    },
-];
-
-const taskDescription = () => {
-    return <Card title="Deskripsi Tugas">Task Description</Card>;
+const taskDescription = (record) => {
+    return <Card title="Deskripsi Tugas">{record.taskDescription}</Card>;
 }
 
 const Task = () => {
     const taskModal = useTaskModal();
     const uploadExcelModal = useUploadExcelModal();
+    const taskListData = useMemo(() => {
+        return taskList.map((task) => ({
+            key: task.taskId,
+            taskTitle: task.taskName,
+            taskCategory: taskCategoryList.find(category => category.taskCategoryId === task.taskCategory).categoryName,
+            taskDescription: task.taskDescription
+        }))
+    }, [taskList, taskCategoryList])
     return (
         <Flex
             css={{
@@ -107,13 +103,12 @@ const Task = () => {
                 </Flex>
                 <Table
                     columns={columns}
-                    dataSource={dataSource}
-                    expandable={{ expandedRowRender: taskDescription, defaultExpandedRowKeys: ['0'] }}
+                    dataSource={taskListData}
+                    expandable={{ expandedRowRender: (record) => taskDescription(record), defaultExpandedRowKeys: ['0'] }}
                     style={{ marginTop: '20px' }}
                     onRow={(row: any) => ({
                         onClick: () => {
-                            console.log(row)
-                            taskModal.open();
+                            taskModal.open(row.key);
                         },
                         style: { cursor: 'pointer' },
                     })} />

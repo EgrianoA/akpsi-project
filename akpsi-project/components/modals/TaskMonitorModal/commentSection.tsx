@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Avatar, List, Input, Form, Button, Row, Col } from 'antd';
-
-const data = [
-    {
-        title: 'User 1 - 19/11/2023 17:49',
-    },
-    {
-        title: 'User 2 - 19/11/2023 16:10',
-    },
-    {
-        title: 'User 1 - 19/11/2023 14:29',
-    },
-    {
-        title: 'User 2 - 19/11/2023 11:39',
-    },
-];
+import allActivity from '../../../public/dummyData/taskActivity.json'
+import userList from '../../../public/dummyData/userList.json'
 
 const CommentSection = ({ taskNumber }: { taskNumber: string }) => {
+    const currentUser = userList[0]
+    const commentData = useMemo(() => {
+        return allActivity.filter(activity => activity.taskNumber === taskNumber && activity.activity.kind === 'comment').map(comment => {
+            const commenter = userList.find(user => user.employeeNumber === comment.activity.activityBy)
+            return { 
+                title: `${commenter.fullName} - ${comment.activity.date}`,
+                comment: comment.activity.description,
+                profilePicture: commenter.profilePicture
+             }
+        })
+    }, [allActivity, userList, taskNumber])
+
     const [submitting, setSubmitting] = useState(false);
     const [value, setValue] = useState('');
 
@@ -42,7 +41,7 @@ const CommentSection = ({ taskNumber }: { taskNumber: string }) => {
         <>
             <Row gutter={10}>
                 <Col>
-                    <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" alt="Han Solo" />
+                    <Avatar src={currentUser.profilePicture} />
                 </Col>
                 <Col span={22}>
                     <Form.Item>
@@ -58,13 +57,13 @@ const CommentSection = ({ taskNumber }: { taskNumber: string }) => {
 
             <List
                 itemLayout="horizontal"
-                dataSource={data}
+                dataSource={commentData}
                 renderItem={(item, index) => (
                     <List.Item>
                         <List.Item.Meta
-                            avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                            title={<a href="https://ant.design">{item.title}</a>}
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            avatar={<Avatar src={item.profilePicture} />}
+                            title={item.title}
+                            description={item.comment}
                         />
                     </List.Item>
                 )}

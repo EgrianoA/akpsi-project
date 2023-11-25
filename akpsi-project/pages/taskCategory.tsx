@@ -7,7 +7,7 @@ import { Input, Table, Button, Space } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { SearchOutlined, ContainerOutlined, PlusCircleOutlined, ReadOutlined } from '@ant-design/icons'
 import useTaskCategoryModal from '../components/modals/TaskCategoryModal/useTaskCategoryModal'
-import dayjs from 'dayjs'
+import taskCategory from '../public/dummyData/taskCategory.json'
 
 
 interface DataType {
@@ -23,19 +23,10 @@ const columns: ColumnsType<DataType> = [
     },
 ];
 
-const dataSource = [
-    {
-        key: '1',
-        taskCategory: 'Category A',
-    },
-    {
-        key: '2',
-        taskCategory: 'Category B',
-    },
-];
 
 const Task = () => {
     const taskCategoryModal = useTaskCategoryModal();
+    const taskCategoryList = useMemo(() => taskCategory.map(category => ({ key: category.taskCategoryId, taskCategory: category.categoryName })), [taskCategory])
     return (
         <Flex
             css={{
@@ -76,7 +67,7 @@ const Task = () => {
                         align={'center'}
                     >
                         <Input
-                            placeholder="Cari Tugas"
+                            placeholder="Cari Kategori"
                             suffix={
                                 <SearchOutlined />
                             }
@@ -90,12 +81,11 @@ const Task = () => {
                 </Flex>
                 <Table
                     columns={columns}
-                    dataSource={dataSource}
+                    dataSource={taskCategoryList}
                     style={{ marginTop: '20px' }}
                     onRow={(row: any) => ({
                         onClick: () => {
-                            console.log(row)
-                            taskCategoryModal.open();
+                            taskCategoryModal.open(row.key);
                         },
                         style: { cursor: 'pointer' },
                     })} />

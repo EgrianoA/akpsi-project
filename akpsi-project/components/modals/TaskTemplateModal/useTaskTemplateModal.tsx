@@ -3,6 +3,8 @@ import { useCallback, useMemo, useState } from 'react';
 import type { ColumnsType, TableRowSelection } from 'antd/es/table/interface';
 import type { TransferItem, TransferProps } from 'antd/es/transfer';
 import difference from 'lodash/difference';
+import allTask from '../../../public/dummyData/taskList.json'
+import allTaskTemplate from '../../../public/dummyData/taskTemplate.json'
 
 
 interface DataType {
@@ -68,47 +70,6 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }: TableTransfe
     </Transfer>
 );
 
-const taskListData = [
-    {
-        key: 'A1',
-        taskName: 'Task A',
-        taskDescription: 'Task A Description',
-        parentTask: '1'
-    },
-    {
-        key: 'B2',
-        taskName: 'Task B',
-        taskDescription: 'Task B Description',
-        parentTask: '1'
-    },
-    {
-        key: 'C3',
-        taskName: 'Task C',
-        taskDescription: 'Task C Description',
-        parentTask: '1'
-    },
-    {
-        key: 'D4',
-        taskName: 'Task D',
-        taskDescription: 'Task D Description',
-        parentTask: '1'
-    },
-    {
-        key: 'G7',
-        taskName: 'Task G',
-        taskDescription: 'Task G Description',
-        parentTask: '2'
-    },
-    {
-        key: 'H8',
-        taskName: 'Task H',
-        taskDescription: 'Task H Description',
-        parentTask: '2'
-    },
-];
-
-const originTargetKeys = ['G7', 'H8']
-
 const taskTableColumn = [
     {
         title: 'Nama Tugas',
@@ -125,9 +86,11 @@ const taskTableColumn = [
 const TaskTemplateModal = ({
     onClose,
     visible,
+    taskTemplateId,
 }: {
     onClose: ModalProps['onCancel'];
     visible: boolean;
+    taskTemplateId: string;
 }) => {
     const closeModal = useCallback(
         (e) => {
@@ -136,7 +99,14 @@ const TaskTemplateModal = ({
         [onClose]
     );
 
-    const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
+    const allTaskData = useMemo(() => allTask.map(task => ({
+        key: task.taskId,
+        taskName: task.taskName,
+        taskDescription: task.taskDescription
+    })), [allTask])
+    const taskTemplateDetail = useMemo(() => allTaskTemplate.find(taskTemplate => taskTemplate.templateId === taskTemplateId), [allTaskTemplate])
+
+    const [targetKeys, setTargetKeys] = useState<string[]>(taskTemplateDetail.taskList);
     const onChange = (nextTargetKeys: string[]) => {
         setTargetKeys(nextTargetKeys);
     };
@@ -156,9 +126,9 @@ const TaskTemplateModal = ({
                         <Card title="Detail Template Tugas">
                             <Form
                                 name="basic"
-                                labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 18 }}
-                                style={{ maxWidth: 600, margin: '0px' }}
+                                labelCol={{ span: 4 }}
+                                wrapperCol={{ span: 20 }}
+                                style={{ maxWidth: 800, margin: '0px' }}
                                 autoComplete="off"
                                 labelAlign="left"
                                 labelWrap
@@ -167,7 +137,7 @@ const TaskTemplateModal = ({
                                     label="Nama Template"
                                     name="taskTemplateName"
                                 >
-                                    <Input placeholder="" />
+                                    <Input placeholder="" defaultValue={taskTemplateDetail.templateName}/>
                                 </Form.Item>
                             </Form>
                         </Card>
@@ -177,7 +147,7 @@ const TaskTemplateModal = ({
                     <Col span={24}>
                         <Card title="Daftar Task">
                             <TableTransfer
-                                dataSource={taskListData}
+                                dataSource={allTaskData}
                                 targetKeys={targetKeys}
                                 showSearch={true}
                                 onChange={onChange}
@@ -204,19 +174,23 @@ const TaskTemplateModal = ({
 }
 const useTaskTemplateModal = () => {
     const [visible, setVisible] = useState(false);
+    const [selectedTaskTemplateId, setselectedTaskTemplateId] = useState(null)
 
     const actions = useMemo(() => {
         const close = () => setVisible(false);
 
         return {
-            open: () => setVisible(true),
+            open: (taskTemplateId: string) => {
+                setselectedTaskTemplateId(taskTemplateId)
+                setVisible(true)
+            },
             close,
         };
     }, [setVisible]);
 
     return {
         ...actions,
-        render: () => <TaskTemplateModal onClose={actions.close} visible={visible} />,
+        render: () => selectedTaskTemplateId && <TaskTemplateModal onClose={actions.close} taskTemplateId={selectedTaskTemplateId} visible={visible} />,
     };
 }
 
