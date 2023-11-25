@@ -28,9 +28,9 @@ export const UserDropdown = () => {
             <Dropdown.Item key="logout" withDivider color="error">
                Keluar
             </Dropdown.Item>
-            <Dropdown.Item key="switch" withDivider>
+            {/* <Dropdown.Item key="switch" withDivider>
                <DarkModeSwitch />
-            </Dropdown.Item>
+            </Dropdown.Item> */}
          </Dropdown.Menu>
       </Dropdown>
    );

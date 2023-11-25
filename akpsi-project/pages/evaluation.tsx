@@ -7,7 +7,8 @@ import { Input, Table, Tag, Descriptions } from 'antd';
 import { SearchOutlined, FileDoneOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useTaskEvaluationModal from '../components/modals/TaskEvaluationModal/useTaskEvaluationModal'
 import type { DescriptionsProps } from 'antd';
-
+import allTeam from '../public/dummyData/teamList.json'
+import allUser from '../public/dummyData/userList.json'
 
 const columns = [
     {
@@ -25,34 +26,34 @@ const columns = [
 const dataSource = [
     {
         key: '1',
-        evaluationName: 'Evaluasi Tugas Pemeriksaan pada lembaga X - Periode Agustus 2023 - Desember 2023',
+        evaluationName: 'Evaluasi Tugas Pemeriksaan TA 2022 S.D SEMESTER I TA 2023 PADA LPP TVRI',
         evaluationStatus: <Tag color="processing">Belum Selesai</Tag>
     },
 ];
 
-const rowDescription: DescriptionsProps['items'] = [
-    {
-        key: '1',
-        label: 'Evaluasi Secara Umum',
-        children: <Tag color="processing">Belum Selesai</Tag>,
-        span: 24
-    },
-    {
-        key: '2',
-        label: 'Evaluasi Investigator 1',
-        children: <Tag color="processing">Belum Selesai</Tag>,
-        span: 24
-    },
-    {
-        key: '3',
-        label: 'Evaluasi Investigator 2',
-        children: <Tag color="processing">Belum Selesai</Tag>,
-        span: 24
-    },
-];
-
 const teamDescription = () => {
-    return <Descriptions title="Status Evaluasi" bordered items={rowDescription} />;
+    const defaultTeam = allTeam[0]
+    const evaluationDescription = [
+        {
+            key: 1,
+            label: 'Evaluasi Secara Umum',
+            children: <Tag color="processing">Belum Selesai</Tag>,
+            span: 18
+        },
+        {
+            key: 2,
+            label: `Evaluasi ${allUser.find(user => user.employeeNumber === defaultTeam.subteamLead).fullName}`,
+            children: <Tag color="processing">Belum Selesai</Tag>,
+            span: 18
+        },
+        ...defaultTeam.teamMember.map((member, index) => ({
+            key: index + 3,
+            label: `Evaluasi ${allUser.find(user => user.employeeNumber === member).fullName}`,
+            children: <Tag color="processing">Belum Selesai</Tag>,
+            span: 18
+        }))
+    ]
+    return <Descriptions title="Status Evaluasi" bordered items={evaluationDescription} />;
 }
 
 const Evaluation = () => {
@@ -112,7 +113,6 @@ const Evaluation = () => {
                 style={{ marginTop: '20px' }}
                 onRow={(row: any) => ({
                     onClick: () => {
-                        console.log(row)
                         taskEvaluationModal.open();
                     },
                     style: { cursor: 'pointer' },
