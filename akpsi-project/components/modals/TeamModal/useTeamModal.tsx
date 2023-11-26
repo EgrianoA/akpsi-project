@@ -191,7 +191,7 @@ const TeamModal = ({
                                     />
                                 </Form.Item>
                                 <Form.Item
-                                    label="Nama Ketua Sub-tim"
+                                    label="Nama Ketua Subtim"
                                     name="subTeamLead"
                                 >
                                     <Select

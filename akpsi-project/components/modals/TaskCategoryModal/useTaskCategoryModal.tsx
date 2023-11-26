@@ -27,7 +27,7 @@ const TaskCategoryModal = ({
             footer={null}
             onCancel={closeModal}
             open={visible}
-            title={'Category A'}
+            title={taskCategoryDetail.categoryName}
             width={'70vw'}
             destroyOnClose
         >

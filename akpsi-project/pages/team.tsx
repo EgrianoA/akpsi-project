@@ -42,7 +42,7 @@ const teamDescription = (record) => {
         },
         {
             key: '4',
-            label: 'Ketua Sub-Team',
+            label: 'Ketua Subtim',
             children: allUser.find(user => user.employeeNumber === teamDetails.subteamLead)?.fullName || '',
             span: 2
         },

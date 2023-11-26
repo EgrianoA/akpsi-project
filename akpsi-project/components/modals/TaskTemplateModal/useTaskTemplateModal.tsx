@@ -116,7 +116,7 @@ const TaskTemplateModal = ({
             footer={null}
             onCancel={closeModal}
             open={visible}
-            title={'Template Tugas A'}
+            title={taskTemplateDetail.templateName}
             width={'70vw'}
             destroyOnClose
         >

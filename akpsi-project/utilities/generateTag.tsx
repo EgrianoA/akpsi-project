@@ -1,15 +1,14 @@
 import { Tag } from 'antd'
-export const generateComplexityTag = (priority: string) => {
-    switch (priority) {
-        case 'Urgent':
+export const generateComplexityTag = (complexity: string) => {
+    switch (complexity) {
         case 'Tinggi':
-            return <Tag color="#ff4d4f">{priority}</Tag>
+            return <Tag color="#ff4d4f">{complexity}</Tag>
         case 'Menengah':
-            return <Tag color="#d4b106">{priority}</Tag>
+            return <Tag color="#d4b106">{complexity}</Tag>
         case 'Rendah':
-            return <Tag color="#52c41a">{priority}</Tag>
+            return <Tag color="#52c41a">{complexity}</Tag>
         default:
-            return <Tag>{priority}</Tag>
+            return <Tag>{complexity}</Tag>
     }
 }
 

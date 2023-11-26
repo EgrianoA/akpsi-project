@@ -14,7 +14,6 @@ import { generateComplexityTag, generateStatusTagColor } from '../../../utilitie
 const taskStatus = ['Akan Dikerjakan', 'Dalam Pengerjaan', 'Memerlukan Informasi Lebih Lanjut', 'Selesai']
 
 const taskPriority = [
-    { label: <Tag color="red"><WarningTwoTone twoToneColor="#fc2121" /> Urgent</Tag>, value: 'Urgent' },
     { label: <Tag color="red"><UpCircleTwoTone twoToneColor="#fc2121" /> Tinggi</Tag>, value: 'Tinggi' },
     { label: <Tag color="warning"><MenuOutlined /> Menengah</Tag>, value: 'Menengah' },
     { label: <Tag><MinusCircleOutlined /> Rendah</Tag>, value: 'Rendah' }
@@ -79,6 +78,11 @@ const TaskMonitorModal = ({
     }, [taskData, allTask, taskCategory])
 
     const investigatorList = allUserData.filter(user => user.role === 'Penyidik').map((investigator) => ({
+        label: investigator.fullName,
+        value: investigator.employeeNumber
+    }))
+
+    const teamLeadList = allUserData.filter(user => user.role === 'Ketua Tim' || user.role === 'Ketua Subtim').map((investigator) => ({
         label: investigator.fullName,
         value: investigator.employeeNumber
     }))
@@ -163,6 +167,16 @@ const TaskMonitorModal = ({
                                     defaultValue={taskData.assignedTo}
                                     style={{ width: 180 }}
                                     options={investigatorList}
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                label="Ditugaskan Oleh"
+                                name="assignedBy"
+                            >
+                                <Select
+                                    defaultValue={taskData.assignedBy}
+                                    style={{ width: 180 }}
+                                    options={teamLeadList}
                                 />
                             </Form.Item>
                             <Form.Item
